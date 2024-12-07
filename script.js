@@ -26,8 +26,10 @@ firstName.addEventListener("input", (e) => {
     if (e.target.value !== "" && e.target.value.length >= 3 && /^[a-zA-Z]+$/.test(e.target.value)) {
         firstNameValue = e.target.value;
         firstNameError.classList.add("disabled");
+        firstName.style.border = "1px solid grey"
     } else {
         firstNameError.classList.remove("disabled");
+        firstName.style.border = "1px solid red"
     }
 })
 
@@ -36,8 +38,10 @@ lastName.addEventListener("input", (e) => {
     if (e.target.value !== "" && e.target.value.length >= 3 && /^[a-zA-Z]+$/.test(e.target.value)) {
         lastNameValue = e.target.value;
         lastNameError.classList.add("disabled");
+        lastName.style.border = ".1px solid grey"
     } else {
         lastNameError.classList.remove("disabled");
+        lastName.style.border = "1px solid red"
     }
 })
 
@@ -47,13 +51,16 @@ email.addEventListener("input", (e) => {
     if (e.target.value === "") {
         invalidEmail.classList.add("disabled");
         emptyEmail.classList.remove("disabled");
+        email.style.border = "1px solid red";
     } else if (validEmailPattern.test(e.target.value)) {
         emailValue = e.target.value;
         invalidEmail.classList.add("disabled");
         emptyEmail.classList.add("disabled");
+        email.style.border = "1px solid grey";
     } else {
         invalidEmail.classList.remove("disabled");
         emptyEmail.classList.add("disabled");
+        email.style.border = "1px solid red";
     }
 })
 
@@ -83,16 +90,50 @@ const handleSubmit = (e) => {
     
     if (!firstNameValue) {
         firstNameError.classList.remove("disabled");
-    } else {
-        firstNameError.classList.add("disabled");
+        firstName.style.border = "1px solid red"
     }
 
-    if (!lastNameValue) lastNameError.classList.remove("disabled");
+    if (!lastNameValue) {
+        lastNameError.classList.remove("disabled");
+        lastName.style.border = "1px solid red";
+    }
 
-    if (!emailValue) emptyEmail.classList.remove("disabled");
+    if (!emailValue) {
+        email.style.border = "1px solid red";
+        emptyEmail.classList.remove("disabled");
+    }
+    
     if (!queryValue) queryError.classList.remove("disabled");
-    if (!messageValue) messageError.classList.remove("disabled");
+    if (!messageValue) {
+        message.style.border = "1px solid red";
+        messageError.classList.remove("disabled");
+    }
     if (!consentValue || consentValue === "no") consentError.classList.remove("disabled");
+
+    setTimeout(() => {
+        if (!firstNameValue) {
+            firstNameError.classList.add("disabled");
+            firstName.style.border = "1px solid grey";
+        }
+    
+        if (!lastNameValue) {
+            lastName.style.border = "1px solid grey";
+            lastNameError.classList.add("disabled");
+        }
+    
+        if (!emailValue) {
+            emptyEmail.classList.add("disabled");
+            email.style.border = "1px solid grey";
+        }
+        if (!queryValue) queryError.classList.add("disabled");
+        if (!messageValue) {
+            messageError.classList.add("disabled");
+            message.style.border = "1px solid grey";
+        }
+
+        if (!consentValue || consentValue === "no") consentError.classList.add("disabled");
+    
+    }, 2000);
 
     if (firstNameValue && lastNameValue && emailValue && queryValue && messageValue && consentValue === "yes") {
        showSuccessMessage();
